@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.hry.bean.AdminBean;
 import com.hry.dbUtils.DbUtil;
 
+
 public class AdminDao {
 
 	/**
@@ -17,7 +18,8 @@ public class AdminDao {
 	 * @return
 	 */
 	public boolean Login_verify(String username,String password){
-		Connection conn = DbUtil.getConn();
+		DbUtil dbUtil=new DbUtil();
+		Connection conn = dbUtil.getConn();
 		String sql = "select * from admin where username='"+username+"' and password='"+password+"'";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -31,7 +33,7 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			DbUtil.closeConn();
+			dbUtil.CloseDB(rs, stm);
 		}
 		return false;
 	}
@@ -47,8 +49,9 @@ public class AdminDao {
 	 */
 	public void Register(String username, String password, String name, String email, String phone,int lend_num,int max_num) {
 		// TODO Auto-generated method stub
-				Connection conn = DbUtil.getConn();
-				String sql = "insert  into admin(status,username,password,name,email,phone,lend_num,max_num) values(?,?,?,?,?,?,?,?)";
+		        DbUtil dbUtil=new DbUtil();
+				Connection conn = dbUtil.getConn();
+				String sql = "insert  into admin(username,password,name,email,phone,status,lend_num,max_num) values(?,?,?,?,?,?,?,?)";
 				int rs = 0;
 				PreparedStatement stm = null;
 				try {
@@ -76,7 +79,8 @@ public class AdminDao {
 	public AdminBean getAdminInfo(String username, String password) {
 		// TODO Auto-generated method stub
 		AdminBean adminbean = new AdminBean();
-		Connection conn = DbUtil.getConn();
+		DbUtil dbUtil=new DbUtil();
+		Connection conn = dbUtil.getConn();
 		String sql = "select * from admin where username='"+username+"' and password='"+password+"'";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -99,9 +103,88 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			DbUtil.closeConn();
+			dbUtil.CloseDB(rs, stm);
 		}
 		return adminbean;
+	}
+	/**
+	 * 根据传入的aid，查找到对应的读者的全部信息，返回一个AdminBean类型的数据，与上一个相似，只是aid的类型为String，
+	 * @param aid
+	 * @return
+	 */
+	public AdminBean get_AidInfo2(String aid){
+		AdminBean adminbean = new AdminBean();
+		DbUtil dbUtil=new DbUtil();
+		Connection conn = dbUtil.getConn();
+		String sql = "select * from admin where aid="+aid;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+			if(rs.next()){
+				adminbean.setAid(rs.getInt("aid"));
+				adminbean.setUsername(rs.getString("username"));
+				adminbean.setName(rs.getString("name"));
+				adminbean.setPassword(rs.getString("password"));
+				adminbean.setEmail(rs.getString("email"));
+				adminbean.setPhone(rs.getString("phone"));
+				adminbean.setStatus(rs.getInt("status"));
+				adminbean.setLend_num(rs.getInt("lend_num"));
+				adminbean.setMax_num(rs.getInt("max_num"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			dbUtil.CloseDB(rs, stm);
+		}
+		return adminbean;
+	}
+	/**
+	 * 修改读者的信息，
+	 */
+	public void updateUser(int aid, String username, String password, String name, String email, String phone,
+			int lend_num, int max_num) {
+		// TODO Auto-generated method stub
+		DbUtil dbUtil=new DbUtil();
+		Connection conn = dbUtil.getConn();
+		String sql = "update admin set username=?,name=?,email=?,phone=?,password=?,lend_num=?,max_num=? where aid=?";
+		PreparedStatement stm = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			stm.setString(1, username);
+			stm.setString(2, name);
+			stm.setString(3, email);
+			stm.setString(4, phone);
+			stm.setString(5, password);
+			stm.setInt(6, lend_num);
+			stm.setInt(7, max_num);
+			stm.setInt(8, aid);
+			stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 删除用户的信息，根据传入的aid作为条件
+	 * @param aid
+	 */
+	public void deleteUser(int aid) {
+		// TODO Auto-generated method stub
+				DbUtil dbUtil=new DbUtil();
+				Connection conn = dbUtil.getConn();
+				String sql = "delete from admin where aid=?";
+				PreparedStatement stm = null;
+				try {
+					stm = conn.prepareStatement(sql);
+					stm.setInt(1, aid);
+					stm.executeUpdate();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 	}
 	
 }

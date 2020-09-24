@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -43,7 +45,7 @@ public class DbUtil {
 	/**
 	 * 获取连接的方法
 	 */
-	public static Connection getConn() {
+	public Connection getConn() {
 		if (conn == null) {
 			try {
 				conn = DriverManager.getConnection(url, username, password);
@@ -59,15 +61,36 @@ public class DbUtil {
 	/**
 	 * 关闭连接的方法
 	 */
-	public static void closeConn() {
-
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//	public static void closeConn() {
+//
+//		try {
+//			conn.close();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    
+//	}
+	public void CloseDB(ResultSet rs, PreparedStatement stm){
+		if(rs!=null)
+		{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-    
+		if(stm!=null)
+		{
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	
