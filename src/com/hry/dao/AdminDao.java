@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.hry.bean.AdminBean;
 import com.hry.dbUtils.DbUtil;
@@ -107,6 +108,41 @@ public class AdminDao {
 		}
 		return adminbean;
 	}
+	
+	/**
+	 * 获取全部用户的信息，其中sql语句中的status=1，表示只查找读者，不显示管理员的
+	 * @return
+	 */
+	public ArrayList<AdminBean> get_ListInfo(){
+		ArrayList<AdminBean> tag_Array = new ArrayList<AdminBean>();
+		Connection conn = DbUtil.getConn();
+		String sql = "select * from admin where status=1";
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			rs = stm.executeQuery();
+			while(rs.next()){
+				AdminBean adminbean = new AdminBean();
+				adminbean.setAid(rs.getInt("aid"));
+				adminbean.setUsername(rs.getString("username"));
+				adminbean.setName(rs.getString("name"));
+				adminbean.setPassword(rs.getString("password"));
+				adminbean.setEmail(rs.getString("email"));
+				adminbean.setPhone(rs.getString("phone"));
+				adminbean.setStatus(rs.getInt("status"));
+				adminbean.setLend_num(rs.getInt("lend_num"));
+				adminbean.setMax_num(rs.getInt("max_num"));
+				tag_Array.add(adminbean);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tag_Array;
+	}
+	
 	/**
 	 * 根据传入的aid，查找到对应的读者的全部信息，返回一个AdminBean类型的数据，与上一个相似，只是aid的类型为String，
 	 * @param aid

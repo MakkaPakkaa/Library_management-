@@ -1,10 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ page import = "com.hry.bean.TypeBean" %>
-<%@ page import = "com.hry.dao.AdminDao" %>
-<%@ page import = "com.hry.bean.BookBean" %>
 <%@ page import = "com.hry.bean.AdminBean" %>
-<%@ page import = "com.hry.dao.BookDao" %>
-<%@ page import = "com.hry.dao.TypeDao" %>
+<%@ page import = "com.hry.dao.AdminDao" %>
+<%@ page import = "com.hry.bean.AdminBean" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="zh-CN" class="ax-vertical-centered">
 <head>
@@ -55,7 +52,8 @@ admin = admindao.get_AidInfo2(aid);
                                       <li role="presentation" class="divider"></li>
                                        <li><a href="#updatepwd" data-toggle="modal">修改密码</a></li>
                                         <li role="presentation" class="divider"></li>
-                                    <li><a href="login.jsp">退出</a></li>
+                                     <!-- href="#identifier"  来指定要切换的特定的模态框（带有 id="identifier"）。-->  
+                                    <li><a href="/books/login.jsp">退出</a></li>
                                 </ul>
                                 
                             </li>
@@ -99,25 +97,14 @@ admin = admindao.get_AidInfo2(aid);
                     <div class="col-lg-12">
                         <div class="panel panel-default bootstrap-admin-no-table-panel">
                             <div class="panel-heading">
-                                <div class="text-muted bootstrap-admin-box-title">查询</div>
+                                <div class="text-muted bootstrap-admin-box-title">读者管理</div>
                             </div>
                             <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
                                 <form class="form-horizontal" action="SelectServlet" method="post">
-                                <input type="hidden" name="tip" value="1">
-                        			<div class="col-lg-7 form-group">
-                                        <label class="col-lg-4 control-label" for="query_bname">图书名称</label>
-                                        <div class="col-lg-8">
-                                            <input class="form-control" id="bookName" name="name" type="text" value="">
-                                            <label class="control-label" for="query_bname" style="display: none;"></label>
-                                        </div>
-                                    </div>
+                        
                                     <div class="col-lg-3 form-group">
 
-                                        <button type="submit" class="btn btn-primary" id="btn_query" onclick="">查询</button>
-                                    </div>
-                                    <div class="col-lg-3 form-group">
-
-                                        <button type="button" class="btn btn-primary" id="btn_add" data-toggle="modal" data-target="#addModal">添加图书</button>
+                                        <button type="button" class="btn btn-primary" id="btn_add" data-toggle="modal" data-target="#addModal">添加读者</button>
                                     </div>
                                 </form>
                             </div>
@@ -131,12 +118,14 @@ admin = admindao.get_AidInfo2(aid);
                         <table id="data_list" class="table table-hover table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>图书号</th>
-                                <th>图书类型</th>
-                                <th>图书名称</th>
-                                <th>作者名称</th>
-                                 <th>出版社</th>
-                                <th>总数量</th>
+                                <th>账号</th>
+                                <th>姓名</th>
+                                <th>邮箱</th>
+                                <th>手机号</th>
+                                 <th>当前借阅数</th>
+                                 <th>历史借阅数</th>
+                                <th>可借阅天数</th>
+                                <th>最大可借数</th>
                                 <th>操作</th>
                                 
                             </tr>
@@ -144,27 +133,29 @@ admin = admindao.get_AidInfo2(aid);
                             
                             
                             <!---在此插入信息-->
-         <%
-                             ArrayList<BookBean> bookdata = new ArrayList<BookBean>();
-                             bookdata = (ArrayList<BookBean>)request.getAttribute("data");
-                           if(bookdata==null){
-                        	   BookDao bookdao = new BookDao();
-                        	   bookdata = (ArrayList<BookBean>)bookdao.get_ListInfo();
+                     <%
+                             ArrayList<AdminBean> data2 = new ArrayList<AdminBean>();
+                             data2 = (ArrayList<AdminBean>)request.getAttribute("data");
+                           if(data2==null){
+                        	   
+                        	   data2 = (ArrayList<AdminBean>)admindao.get_ListInfo();
                            }
 	
-  for (BookBean bean : bookdata){
-  %>                 
+  for (AdminBean bean : data2){
+               %>                 
 								<tbody>
-	                         	   	<td><%= bean.getCard() %></td>
-	                                <td><%= bean.getType() %></td>
+	                         	   	<td><%= bean.getUsername() %></td>
 	                                <td><%= bean.getName() %></td>
-	                                <td><%= bean.getAutho() %></td>
-	                                <td><%= bean.getPress() %></td>  
-	                                <td><%= bean.getNum() %></td>
+	                                <td><%= bean.getEmail() %></td>
+	                                <td><%= bean.getPhone() %></td>
+	                                <td>1</td>  
+	                                <td>1</td>
+	                                <td><%= bean.getLend_num() %></td>
+	                                <td><%= bean.getMax_num() %></td>
 <td><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateModal" 
-id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>','<%= bean.getType() %>','<%= bean.getName() %>'
-,'<%= bean.getAutho() %>','<%= bean.getPress() %>','<%= bean.getNum() %>')">修改</button>
-<button type="button" class="btn btn-danger btn-xs" onclick="deletebook(<%= bean.getBid() %>)">删除</button>
+id="btn_update" onclick="showInfo2('<%= bean.getAid() %>','<%= bean.getUsername() %>','<%= bean.getName() %>','<%= bean.getEmail() %>'
+,'<%= bean.getPhone() %>','<%= bean.getPassword() %>','<%= bean.getLend_num() %>','<%= bean.getMax_num() %>')">修改</button>
+<button type="button" class="btn btn-danger btn-xs" onclick="deletebook(<%= bean.getAid() %>)">删除</button>
 	</td>                                            
                           	  </tbody>
                        <%} %> 
@@ -174,19 +165,20 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
         </div>
     </div>
     <script type="text/javascript">
-    function showInfo2(bid,card,type,name,autho,press,num) {
-        document.getElementById("updateISBN").value = card;
-        document.getElementById("updateBookName").value = name;
-        document.getElementById("updateAutho").value = autho;
-        document.getElementById("updatePress").value = press;
-        document.getElementById("updateBookType").value = type;
-        document.getElementById("updateNum").value = num;
-        document.getElementById("updateBookId").value = bid;
+    function showInfo2(aid,username,name,email,phone,password,lend_num,max_num) {
+        document.getElementById("updateaid").value = aid;
+        document.getElementById("updateusername").value = username;
+        document.getElementById("updatename").value = name;
+        document.getElementById("updateemail").value = email;
+        document.getElementById("updatephone").value = phone;
+        document.getElementById("updatepassword").value = password;
+        document.getElementById("updatelend_num").value = lend_num;
+        document.getElementById("updatemax_num").value = max_num;
     }
-    function deletebook(bid) {
+    function deletebook(aid) {
     	con=confirm("是否删除?"); 
     	if(con==true){
-    		location.href = "DeleteServlet?bid="+bid;
+    		location.href = "DeleteUserServlet?aid="+aid;
     	}
     }
     </script>
@@ -196,7 +188,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
                                      <!-------------------------------------------------------------->  
                                 
                                         <!-- 修改模态框（Modal） -->
-                               <form class="form-horizontal" method="post" action="UpdateBookServlet">   <!--保证样式水平不混乱-->   
+                               <form class="form-horizontal" method="post" action="UpdateUserServlet">   <!--保证样式水平不混乱-->   
 									<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -205,7 +197,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 														&times;
 													</button>
 													<h4 class="modal-title" id="updateModalLabel">
-														修改图书信息
+														修改读者信息
 													</h4>
 												</div>
 												<div class="modal-body">
@@ -213,60 +205,57 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 										<!---------------------表单-------------------->
 										
 										<div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">图书号</label>
+											<label for="firstname" class="col-sm-3 control-label">账号</label>
 												<div class="col-sm-7">
-												<input type="hidden" id="updateBookId" name="updatebid">
-													<input type="text" class="form-control" id="updateISBN" name="card"  placeholder="请输入书号">
+												<input type="hidden" id="updateaid" name="aid">
+													<input type="text" class="form-control" id="updateusername" name="username"  placeholder="">
 												<label class="control-label" for="updateISBN" style="display: none;"></label>
 												</div>
 										</div>
 										
 											
 										 <div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">图书名称</label>
+											<label for="firstname" class="col-sm-3 control-label">姓名</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="updateBookName" name="name"  placeholder="请输入图书名称">
+													<input type="text" class="form-control" id="updatename" name="name"  placeholder="">
 												<label class="control-label" for="updateBookName" style="display: none;"></label>
 												</div>
 										</div>
 											
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">图书类型</label>
-											<div class="col-sm-7">
-												 <select class="form-control" id="updateBookType" name="type" onPropertyChange="showValue(this.value)">
-                                           				 <option value="-1">请选择</option> 
-   <%
-	TypeDao typedao = new TypeDao();
-	ArrayList<TypeBean> data = (ArrayList<TypeBean>)typedao.get_ListInfo();
-  	data = (ArrayList<TypeBean>)typedao.get_ListInfo();
-  	for (TypeBean bean : data){
-  %>                
-   <option value="<%= bean.getName() %>"><%= bean.getName() %></option>                        <%} %>                                        
-                                      			  </select>
-											<label class="control-label" for="updateBookType" style="display: none;"></label>
-											</div>
-										</div>
-											
-										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">作者名称</label>
+											<label for="firstname" class="col-sm-3 control-label">邮箱</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="updateAutho" name="autho" placeholder="请输入作者名称">
+													<input type="text" class="form-control" id="updateemail" name="email" placeholder="">
 												<label class="control-label" for="updateAutho" style="display: none;"></label>
 												</div>
 										</div>
 										
 										
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">出版社</label>
+											<label for="firstname" class="col-sm-3 control-label">手机号</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="updatePress" name="press"  placeholder="请输入出版社">
+													<input type="text" class="form-control" id="updatephone" name="phone"  placeholder="">
 												<label class="control-label" for="updatePress" style="display: none;"></label>
 												</div>
 										</div>		
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">总数量</label>
+											<label for="firstname" class="col-sm-3 control-label">密码</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="updateNum" name="num"  placeholder="请输入总数量">
+													<input type="text" class="form-control" id="updatepassword" name="password"  placeholder="">
+												<label class="control-label" for="updatePress" style="display: none;"></label>
+												</div>
+										</div>
+										<div class="form-group">	
+											<label for="firstname" class="col-sm-3 control-label">可借阅天数</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" id="updatelend_num" name="lend_num"  placeholder="">
+												<label class="control-label" for="updatePress" style="display: none;"></label>
+												</div>
+										</div>	
+										<div class="form-group">	
+											<label for="firstname" class="col-sm-3 control-label">最大借阅数</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" id="updatemax_num" name="max_num"  placeholder="">
 												<label class="control-label" for="updatePress" style="display: none;"></label>
 												</div>
 										</div>	
@@ -292,7 +281,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
     
     
      <!--------------------------------------添加的模糊框------------------------>  
-                                 <form class="form-horizontal" method="post" action="AddBookServlet">   <!--保证样式水平不混乱-->   
+                                 <form class="form-horizontal" method="post" action="/books/AddUserServlet">   <!--保证样式水平不混乱-->   
                                         <!-- 模态框（Modal） -->
 									<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
@@ -302,7 +291,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 														&times;
 													</button>
 													<h4 class="modal-title" id="myModalLabel">
-														添加新图书
+														添加新读者
 													</h4>
 												</div>
 												<div class="modal-body">
@@ -310,62 +299,61 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 										<!---------------------表单-------------------->
 										
 										<div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">图书号</label>
+											<label for="firstname" class="col-sm-3 control-label">账号</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addISBN" required="required" name="card" placeholder="请输入书号">
+													<input type="text" class="form-control" name="username" id="addISBN" required="required" placeholder="请输入账号">
 												<label class="control-label" for="addISBN" style="display: none;"></label>	
 												</div>
 										</div>
 										
 										 <div class="form-group">
-											<label for="firstname" class="col-sm-3 control-label">图书名称</label>
+											<label for="firstname" class="col-sm-3 control-label">姓名</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addBookName" required="required" name="name"  placeholder="请输入图书名称">
+													<input type="text" class="form-control" name="name" id="addBookName" required="required"  placeholder="请输入姓名">
 													<label class="control-label" for="addBookName" style="display: none;"></label>	
 												</div>
 										</div>
 											
-										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">图书类型</label>
-											<div class="col-sm-7">
-												 <select class="form-control" id="addBookType" name="type">
-                                           				 <option value="无分类">请选择</option>
-                                           				  <%
-	
-  data = (ArrayList<TypeBean>)typedao.get_ListInfo();
-  for (TypeBean bean : data){
-  %>                 <option value="<%= bean.getName() %>"><%= bean.getName() %></option>                        <%} %>
-                                      			  </select>
-												<label class="control-label" for="addBookType" style="display: none;"></label>	
-											</div>
-										</div>
+								
 											
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">作者名称</label>
+											<label for="firstname" class="col-sm-3 control-label">邮箱</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addAutho" required="required" name="autho"  placeholder="请输入作者名称">
+													<input type="text" class="form-control" name="email" id="addAutho" required="required"  placeholder="请输入邮箱">
 												<label class="control-label" for="addAutho" style="display: none;"></label>	
 												</div>
 										</div>
 										
 										
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">出版社</label>
+											<label for="firstname" class="col-sm-3 control-label">手机号</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addPress" required="required" name="press"  placeholder="请输入出版社">
+													<input type="text" class="form-control" name="phone" id="addPress" required="required"  placeholder="请输入手机号">
+												<label class="control-label" for="addPress" style="display: none;"></label>	
+												</div>
+										</div>
+										<div class="form-group">	
+											<label for="firstname" class="col-sm-3 control-label">密码</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" name="password" id="addPress" required="required"   placeholder="请输入密码">
 												<label class="control-label" for="addPress" style="display: none;"></label>	
 												</div>
 										</div>
 										
-										
 										<div class="form-group">	
-											<label for="firstname" class="col-sm-3 control-label">总数量</label>
+											<label for="firstname" class="col-sm-3 control-label">可借阅天数</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" id="addNum" required="required" name="num" placeholder="请输入图书总数量">
+													<input type="text" class="form-control" name="lend_num" id="updatelend_num" required="required"  placeholder="请输入可借阅天数">
 												<label class="control-label" for="addNum" style="display: none;"></label>	
 												</div>
 										</div>
-										
+										<div class="form-group">	
+											<label for="firstname" class="col-sm-3 control-label">最大可借数</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" name="max_num" id="updatemax_num" required="required" placeholder="请输入最大可借数">
+												<label class="control-label" for="addPress" style="display: none;"></label>	
+												</div>
+										</div>
 										
 										
 										<!---------------------表单-------------------->
@@ -389,10 +377,10 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
     
     
     
-
+    
 <!-------------------------------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updatepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -409,7 +397,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 							 
 								<!--正文-->
 								<input type="hidden" name="tip" value="1">
-								<input type="hidden" name="url" value="admin_book">
+								<input type="hidden" name="url" value="admin_user">
 							<div class="form-group">
 								<label for="firstname" class="col-sm-3 control-label">原密码</label>
 								<div class="col-sm-7">
@@ -444,7 +432,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
                                    
                                    <!-------------------------个人资料模糊框------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updateinfo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -462,7 +450,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 							 
 								<!--正文-->
 								<input type="hidden" name="tip" value="2">
-								<input type="hidden" name="url" value="admin_book">
+								<input type="hidden" name="url" value="admin_user">
 							<div class="form-group">
 								<label for="firstname" class="col-sm-3 control-label">真实姓名</label>
 								<div class="col-sm-7">
@@ -505,6 +493,8 @@ id="btn_update" onclick="showInfo2('<%= bean.getBid() %>','<%= bean.getCard() %>
 
 				</form>	
                                    <!-------------------------------------------------------------->
+    
+    
     
     
     
