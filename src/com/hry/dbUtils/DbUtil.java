@@ -45,7 +45,7 @@ public class DbUtil {
 	/**
 	 * 获取连接的方法
 	 */
-	public Connection getConn() {
+	public static Connection getConn() {
 		if (conn == null) {
 			try {
 				conn = DriverManager.getConnection(url, username, password);

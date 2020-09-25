@@ -51,7 +51,7 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		        DbUtil dbUtil=new DbUtil();
 				Connection conn = dbUtil.getConn();
-				String sql = "insert  into admin(username,password,name,email,phone,status,lend_num,max_num) values(?,?,?,?,?,?,?,?)";
+				String sql = "insert  into admin(status,username,password,name,email,phone,lend_num,max_num) values(?,?,?,?,?,?,?,?)";
 				int rs = 0;
 				PreparedStatement stm = null;
 				try {
