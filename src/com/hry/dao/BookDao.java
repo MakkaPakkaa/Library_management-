@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import com.hry.bean.AdminBean;
 import com.hry.bean.BookBean;
 import com.hry.bean.HistoryBean;
 import com.hry.dbUtils.DbUtil;
@@ -151,7 +153,7 @@ public class BookDao {
 	public BookBean get_BookInfo(int bid) {
 		BookBean tag = new BookBean();
 		Connection conn = DbUtil.getConn();
-		String sql = "select * from bookk where bid = '"+ bid +"' ";
+		String sql = "select * from book where bid = '"+ bid +"' ";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
@@ -248,6 +250,65 @@ public class BookDao {
 	 * @param bid
 	 * @param adminbean
 	 */
+	public void borrowBook(int bid, AdminBean adminbean) {
+		BookBean bookbean = new BookBean();
+		bookbean = this.get_BookInfo(bid);
+		//生成日期功能
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DATE);
+		//生成借阅开始时间
+		String begintime = ""+ year +"-"+month +"-"+day;
+		month = month +1;
+		//生成截至还书日期
+		String endtime = ""+year+"-"+month+"-"+day;
+		Connection conn = DbUtil.getConn();
+		String sql = "insert into history(aid,bid,card,bookname,adminname,username,begintime,endtime,status) values(?,?,?,?,?,?,?,?,?)";
+		PreparedStatement stm = null;
+		int rs = 0;
+		try {
+			stm = conn.prepareStatement(sql);
+			stm.setInt(1, adminbean.getAid());
+			stm.setInt(2, bookbean.getBid());
+			stm.setString(3, bookbean.getCard());
+			stm.setString(4, bookbean.getName());
+			stm.setString(5, adminbean.getUsername());
+			stm.setString(6, adminbean.getName());
+			stm.setString(7, begintime);
+			stm.setString(8, endtime);
+			stm.setInt(9, 1);
+			rs = stm.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 还书功能的函数，根据传入的hid借阅记录id，讲status字段的值改为0，并将还书日期改变为当前日期
+	 * @param hid
+	 */
+	public void borrowBook2(int hid) {
+		//生成日期
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DATE);
+		//生成还书日期
+		String endtime = ""+year+"-"+month+"-"+day;
+		Connection conn = DbUtil.getConn();
+		String sql = "update history set endtime=?,status=? where hid=?";
+		PreparedStatement stm = null;
+		try {
+			stm = conn.prepareStatement(sql);
+			stm.setString(1, endtime);
+			stm.setInt(2, 0);
+			stm.setInt(3, hid);
+			stm.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
 	
-
 }
