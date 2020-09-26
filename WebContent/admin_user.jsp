@@ -53,7 +53,7 @@ admin = admindao.get_AidInfo2(aid);
                                        <li><a href="#updatepwd" data-toggle="modal">修改密码</a></li>
                                         <li role="presentation" class="divider"></li>
                                      <!-- href="#identifier"  来指定要切换的特定的模态框（带有 id="identifier"）。-->  
-                                    <li><a href="/books/login.jsp">退出</a></li>
+                                    <li><a href="login.jsp">退出</a></li>
                                 </ul>
                                 
                             </li>
@@ -281,7 +281,7 @@ id="btn_update" onclick="showInfo2('<%= bean.getAid() %>','<%= bean.getUsername(
     
     
      <!--------------------------------------添加的模糊框------------------------>  
-                                 <form class="form-horizontal" method="post" action="/books/AddUserServlet">   <!--保证样式水平不混乱-->   
+                                 <form class="form-horizontal" method="post" action="AddUserServlet">   <!--保证样式水平不混乱-->   
                                         <!-- 模态框（Modal） -->
 									<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
