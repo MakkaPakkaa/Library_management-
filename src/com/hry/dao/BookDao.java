@@ -18,12 +18,7 @@ import com.hry.dbUtils.DbUtil;
 public class BookDao {
 	/**
 	 * 添加图书信息，传入所有的信息
-	 * @param card
-	 * @param name
-	 * @param type
-	 * @param autho
-	 * @param press
-	 * @param num
+	 * 
 	 */
 	public void addBook(String card ,String name ,String type , String autho ,String press, int num ) {
 		Connection conn = DbUtil.getConn();
@@ -48,7 +43,7 @@ public class BookDao {
 	}
 	/**
 	 * 获取所有的图书信息，返回的是ArrayList数组形式
-	 * @return
+	 *
 	 */
 	public ArrayList<BookBean> get_ListInfo(){
 		ArrayList<BookBean> tag_Array = new ArrayList<BookBean>();
@@ -78,8 +73,7 @@ public class BookDao {
 	}
 	/**
 	 * 获取借阅记录的全部信息，传入的条件有status，aid，表示搜索正在借阅的，或者已经还书的信息，aid代表当前登录用户
-	 * @param status
-	 * @return
+	 *
 	 */
 	public ArrayList<HistoryBean> get_HisoryListInfo(int status,String aid){
 		ArrayList<HistoryBean> tag_Array = new ArrayList<HistoryBean>();
@@ -113,8 +107,7 @@ public class BookDao {
 	}
 	/**
 	 * 获取借阅记录的全部信息，传入的条件有status，表示搜索正在借阅的，或者已经还书的信息
-	 * @param status
-	 * @return
+	 *
 	 */
 	public ArrayList<HistoryBean> get_HistoryListInfo2(int status){
 		ArrayList<HistoryBean> tag_Array = new ArrayList<HistoryBean>();
@@ -147,8 +140,7 @@ public class BookDao {
 	}
 	/**
 	 * 获取单个图书的信息，根据传入的bid来查找，返回一个BookBean数据类型
-	 * @param bid
-	 * @return
+	 *
 	 */
 	public BookBean get_BookInfo(int bid) {
 		BookBean tag = new BookBean();
@@ -200,7 +192,6 @@ public class BookDao {
 	}
 	/**
 	 * 删除图书信息，根据传入的bid作为条件
-	 * @param bid
 	 */
 	public void deleteBook(int bid) {
 		Connection conn = DbUtil.getConn();
@@ -217,8 +208,7 @@ public class BookDao {
 	}
 	/**
 	 * 用户查找图书，根据输入的名称，使用like进行模糊查询，然后返回一个ArrayList数组类型
-	 * @param name
-	 * @return
+	 
 	 */
 	public ArrayList<BookBean> getLikeList(String name){
 		ArrayList<BookBean> tag_Array = new ArrayList<BookBean>();
@@ -247,8 +237,7 @@ public class BookDao {
 	}
 	/**
 	 * 图书借阅函数，根据传入bid图书id，adminbean当前登录用户的信息，在借阅记录数据表中新插入一条记录
-	 * @param bid
-	 * @param adminbean
+	 *
 	 */
 	public void borrowBook(int bid, AdminBean adminbean) {
 		BookBean bookbean = new BookBean();
@@ -286,7 +275,7 @@ public class BookDao {
 	}
 	/**
 	 * 还书功能的函数，根据传入的hid借阅记录id，讲status字段的值改为0，并将还书日期改变为当前日期
-	 * @param hid
+	 * 
 	 */
 	public void borrowBook2(int hid) {
 		//生成日期

@@ -16,7 +16,7 @@ import com.hry.dbUtils.DbUtil;
 public class TypeDao {
 	/**
 	 * 获取所有图书类型的信息，返回数组形式
-	 * @return
+	 *
 	 */
 	public ArrayList<TypeBean> get_ListInfo(){
 		ArrayList<TypeBean> tag_Array = new ArrayList<TypeBean>();
@@ -41,8 +41,8 @@ public class TypeDao {
 	}
 	/**
 	 * 修改图书分类的信息
-	 * @param tid
-	 * @param name
+	 * tid
+	 * name
 	 */
 	public void updateTypeBook(int tid, String name) {
 		Connection conn = DbUtil.getConn();
@@ -60,7 +60,7 @@ public class TypeDao {
 	}
 	/**
 	 * 添加一个图书分类
-	 * @param name
+	 * name
 	 */
 	public void addBookType(String name) {
 		Connection conn = DbUtil.getConn();
@@ -78,7 +78,7 @@ public class TypeDao {
 	}
 	/**
 	 * 删除一个图书分类
-	 * @param tid
+	 * tid
 	 */
 	public void deleteBookType(int tid) {
 		Connection conn = DbUtil.getConn();
