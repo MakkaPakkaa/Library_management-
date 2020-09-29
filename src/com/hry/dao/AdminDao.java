@@ -36,9 +36,9 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			DbUtil.CloseDB(rs, stm, conn);
-		}
+//		finally {
+//			DbUtil.CloseDB(rs, stm, conn);
+//		}
 		return false;
 	}
 	/**
@@ -105,9 +105,10 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			DbUtil.CloseDB(rs, stm, conn);
 		}
+//		finally {
+//			DbUtil.CloseDB(rs, stm, conn);
+//		}
 		
 		return adminbean;
 	}
@@ -143,9 +144,9 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			DbUtil.CloseDB(rs, stm, conn);
-		}
+//		finally {
+//			DbUtil.CloseDB(rs, stm, conn);
+//		}
 		return tag_Array;
 	}
 	
@@ -177,9 +178,10 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			DbUtil.CloseDB(rs, stm, conn);
 		}
+//		finally {
+//			DbUtil.CloseDB(rs, stm, conn);
+//		}
 		return adminbean;
 	}
 	/**

@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="collapse navbar-collapse main-navbar-collapse">
-                        <a class="navbar-brand" href="/admin/admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
+                        <a class="navbar-brand" href="admin.jsp"><strong>欢迎使用图书馆管理系统</strong></a>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" role="button" class="dropdown-toggle" data-hover="dropdown"> <i class="glyphicon glyphicon-user"></i> 欢迎您，管理员 <s:property value="#session.admin.name"/> <i class="caret"></i></a>
@@ -181,7 +181,7 @@
     
 <!-------------------------------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updatepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -233,7 +233,7 @@
                                    
                                    <!-------------------------个人资料模糊框------------------------------------->  
                  
-                   <form class="form-horizontal" method="post" action="/books/AdminServlet">   <!--保证样式水平不混乱-->                  
+                   <form class="form-horizontal" method="post" action="AdminServlet">   <!--保证样式水平不混乱-->                  
                                      <!-- 模态框（Modal） -->
 				<div class="modal fade" id="updateinfo" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
