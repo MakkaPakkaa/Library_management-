@@ -34,9 +34,7 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			DbUtil.closeConn();
-			}
+		}
 		return false;
 	}
 	/**
@@ -69,6 +67,8 @@ public class AdminDao {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally {
+					DbUtil.closeConn();
 				}
 	}
 	/**
