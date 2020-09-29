@@ -12,7 +12,7 @@ import java.util.Properties;
 public class DbUtil {
 
 	public static String username = "root";
-	public static String password = "root";
+	public static String pwd = "root";
 	public static String url = "jdbc:mysql://localhost:3306/books?serverTimezone=UTC";
 	
 	static{
@@ -26,7 +26,7 @@ public class DbUtil {
 	public static Connection getConn(){
 		Connection conn = null;
 		try{
-			conn = DriverManager.getConnection(url,username,password);
+			conn = DriverManager.getConnection(url,username,pwd);
 		
 		} catch (SQLException e){
 			e.printStackTrace();
