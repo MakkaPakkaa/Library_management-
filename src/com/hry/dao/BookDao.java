@@ -21,19 +21,23 @@ public class BookDao {
 	 * 
 	 */
 	public void addBook(String card ,String name ,String type , String autho ,String press, int num ) {
+		//连接数据库
 		Connection conn = DbUtil.getConn();
+		//SQL
 		String sql = "insert into book(card,name,type,autho,press,num) values(?,?,?,?,?,?)";
 		int rs = 0;
 		PreparedStatement stm = null;
 		try {
+			//预编译SQL，减少sql执行
 			stm = conn.prepareStatement(sql);
+			//添加
 			stm.setString(1, card);
 			stm.setString(2, name);
 			stm.setString(3, type);
 			stm.setString(4, autho);
 			stm.setString(5, press);
 			stm.setInt(6, num);
-			
+			//执行更新
 			rs = stm.executeUpdate();
 			
 		} catch (Exception e) {
@@ -43,7 +47,9 @@ public class BookDao {
 	}
 	/**
 	 * 获取所有的图书信息，返回的是ArrayList数组形式
-	 *
+	 * 访问 ArrayList 中的元素可以使用 get() 方法：
+	 *修改 ArrayList 中的元素可以使用 set() 方法：
+	 *删除 ArrayList 中的元素可以使用 remove() 方法：
 	 */
 	public ArrayList<BookBean> get_ListInfo(){
 		ArrayList<BookBean> tag_Array = new ArrayList<BookBean>();
@@ -208,7 +214,6 @@ public class BookDao {
 	}
 	/**
 	 * 用户查找图书，根据输入的名称，使用like进行模糊查询，然后返回一个ArrayList数组类型
-	 
 	 */
 	public ArrayList<BookBean> getLikeList(String name){
 		ArrayList<BookBean> tag_Array = new ArrayList<BookBean>();

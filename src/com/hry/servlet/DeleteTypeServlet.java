@@ -27,9 +27,10 @@ public class DeleteTypeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//删除图书分类信息
+		//设置编码类型
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
+		//Integer 类：parseInt() 方法用于将字符串参数作为有符号的十进制整数进行解析
 		int tid = Integer.parseInt(request.getParameter("tid"));
 		TypeDao typedao = new TypeDao();
 		typedao.deleteBookType(tid);

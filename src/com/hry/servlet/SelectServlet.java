@@ -38,6 +38,7 @@ public class SelectServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//设置编码类型
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("name");
 		

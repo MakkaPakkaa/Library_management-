@@ -2,8 +2,9 @@ package com.hry.bean;
 
 public class HistoryBean {
 //	历史借阅记录的数据表的bean
+	
 	private int hid;//借阅记录的id
-	private int aid;//读者的id
+	private int aid;//用户管理员的id
 	private int bid;//图书的id
 	private String card;//图书号
 	private String bookname;//图书名称

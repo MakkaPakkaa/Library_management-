@@ -29,6 +29,7 @@ public class UpdateBookServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//修改图书信息
+		//设置编码类型
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("/texthtml;charset= UTF-8");
 		
@@ -37,7 +38,7 @@ public class UpdateBookServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		String autho = request.getParameter("autho");
 		String press = request.getParameter("press");
-		
+		//Integer 类：parseInt() 方法用于将字符串参数作为有符号的十进制整数进行解析
 		int num = Integer.parseInt(request.getParameter("num"));
 		int bid = Integer.parseInt(request.getParameter("updatebid"));
 		System.out.println(bid);

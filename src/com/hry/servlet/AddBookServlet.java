@@ -32,10 +32,12 @@ public class AddBookServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset = UTF-8");
 		//获取要添加的图书信息
+		//得到图书号参数
 		String card = request.getParameter("card");
 		String name = request.getParameter("name");
 		String type = request.getParameter("type");
 		String autho = request.getParameter("autho");
+		//出版社
 		String press = request.getParameter("press");
 		int num = Integer.parseInt(request.getParameter("num"));
 		BookDao bookdao = new BookDao();

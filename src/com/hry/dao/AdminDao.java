@@ -14,15 +14,18 @@ public class AdminDao {
 
 	/**
 	 * 登录验证功能，传入用户名和密码，在数据库中查找，如果找到了，返回true，没找到则返回false
-	 * 
+	 * username、password
 	 */
 	public boolean Login_verify(String username,String password){
+		//连接数据库
 		DbUtil dbUtil=new DbUtil();
 		Connection conn = dbUtil.getConn();
+		//sql语句
 		String sql = "select * from admin where username='"+username+"' and password='"+password+"'";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
+			//预编译SQL，减少sql执行
 			stm = conn.prepareStatement(sql);
 			rs = stm.executeQuery();
 			if(rs.next()){
@@ -31,32 +34,37 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			dbUtil.CloseDB(rs, stm);
-		}
+		}finally {
+			DbUtil.closeConn();
+			}
 		return false;
 	}
 	/**
 	 * 注册账号的函数，传入账号，密码，姓名，邮箱，手机号，借阅天数，可借阅数
-	 * 
+	 *  username,  password,  name,  email,  phone, lend_num, max_num
 	 */
 	public void Register(String username, String password, String name, String email, String phone,int lend_num,int max_num) {
 		// TODO Auto-generated method stub
+		//连接数据库
 		        DbUtil dbUtil=new DbUtil();
 				Connection conn = dbUtil.getConn();
+				//sql语句
 				String sql = "insert  into admin(status,username,password,name,email,phone,lend_num,max_num) values(?,?,?,?,?,?,?,?)";
 				int rs = 0;
 				PreparedStatement stm = null;
 				try {
+					//预编译SQL，减少sql执行
 					stm = conn.prepareStatement(sql);
+					//传参
 					stm.setInt(1, 1);
 					stm.setString(2, username);
 					stm.setString(3, password);
 					stm.setString(4, name);
 					stm.setString(5, email);
 					stm.setString(6, phone);
-					stm.setInt(7, lend_num);
-					stm.setInt(8, max_num);
+					stm.setInt(7, lend_num);//借阅天数
+					stm.setInt(8, max_num);//可借阅数
+					//执行更新
 					rs = stm.executeUpdate();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -76,10 +84,12 @@ public class AdminDao {
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
+			//预编译SQL，减少sql执行
 			stm = conn.prepareStatement(sql);
-//			stm.setString(1,name);
+			//执行查询
 			rs = stm.executeQuery();
 			if(rs.next()){
+				//传参
 				adminbean.setAid(rs.getInt("aid"));
 				adminbean.setUsername(rs.getString("username"));
 				adminbean.setName(rs.getString("name"));
@@ -93,14 +103,13 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			dbUtil.CloseDB(rs, stm);
 		}
+		
 		return adminbean;
 	}
 	
 	/**
-	 * 获取全部用户的信息，其中sql语句中的status=1，表示只查找读者，不显示管理员的
+	 * 获取全部用户的信息，其中sql语句中的status=1，表示只查找读者(1)，不显示管理员(2)的
 	 * 
 	 */
 	public ArrayList<AdminBean> get_ListInfo(){
@@ -134,7 +143,7 @@ public class AdminDao {
 	}
 	
 	/**
-	 * 根据传入的aid，查找到对应的读者的全部信息，返回一个AdminBean类型的数据，与上一个相似，只是aid的类型为String，
+	 * 根据传入的aid图书号，查找到对应的读者的全部信息，返回一个AdminBean类型的数据，与上一个相似，只是aid的类型为String，
 	 * 
 	 */
 	public AdminBean get_AidInfo2(String aid){
@@ -161,13 +170,11 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			dbUtil.CloseDB(rs, stm);
 		}
 		return adminbean;
 	}
 	/**
-	 * 修改读者的信息，
+	 * 修改读者的信息
 	 */
 	public void updateUser(int aid, String username, String password, String name, String email, String phone,
 			int lend_num, int max_num) {

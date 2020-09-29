@@ -4,7 +4,7 @@ public class BookBean {
 	/**
 	 * 图书的数据表的bean
 	 */
-	private int bid;//id
+	private int bid;//图书id
 	private String name;//图书名称
 	private String card;//图书号
 	private String autho;//作者

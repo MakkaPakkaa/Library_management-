@@ -61,37 +61,37 @@ public class DbUtil {
 	/**
 	 * 关闭连接的方法
 	 */
-//	public static void closeConn() {
-//
-//		try {
-//			conn.close();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    
-//	}
-	public void CloseDB(ResultSet rs, PreparedStatement stm){
-		if(rs!=null)
-		{
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public static void closeConn() {
+
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if(stm!=null)
-		{
-			try {
-				stm.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+    
 	}
+//	public void CloseDB(ResultSet rs, PreparedStatement stm){
+//		if(rs!=null)
+//		{
+//			try {
+//				rs.close();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		if(stm!=null)
+//		{
+//			try {
+//				stm.close();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//	}
 	
 	
 }

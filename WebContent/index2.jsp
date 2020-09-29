@@ -35,7 +35,7 @@
 	AdminBean admin = new AdminBean();
 	String aid = (String)session.getAttribute("aid");
 	AdminDao admindao = new AdminDao();
-// 	admin = admindao.get_AidInfo2(aid);
+	admin = admindao.get_AidInfo2(aid);
 %>
 
 <nav class="navbar navbar-inverse navbar-fixed-top bootstrap-admin-navbar bootstrap-admin-navbar-under-small" role="navigation">

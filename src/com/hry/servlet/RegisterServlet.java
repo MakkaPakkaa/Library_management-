@@ -48,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		
 		System.out.println(username);
-		
+		//默认设置最大借阅数和借阅天数
 		int lend_num = 30;
 		int max_num = 5;
 	

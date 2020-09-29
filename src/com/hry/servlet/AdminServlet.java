@@ -32,6 +32,7 @@ public class AdminServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//PrintWriter:输出流，为异常处理
 		PrintWriter out = response.getWriter();
 		//设置编码类型
 		request.setCharacterEncoding("UTF-8");

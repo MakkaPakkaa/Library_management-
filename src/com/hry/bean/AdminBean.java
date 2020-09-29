@@ -6,7 +6,7 @@ public class AdminBean {
 		// TODO Auto-generated constructor stub
 	}
 	
-	private int aid;//id
+	private int aid;//用户管理员id
 	private int status;//用来判断是管理员还是读者，读者的值为1，管理员为2
 	private String username;//账号，
 	private String name;//读者的姓名

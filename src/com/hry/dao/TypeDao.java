@@ -16,17 +16,24 @@ import com.hry.dbUtils.DbUtil;
 public class TypeDao {
 	/**
 	 * 获取所有图书类型的信息，返回数组形式
-	 *
+	 *访问 ArrayList 中的元素可以使用 get() 方法：
+	 *修改 ArrayList 中的元素可以使用 set() 方法：
+	 *删除 ArrayList 中的元素可以使用 remove() 方法：
 	 */
 	public ArrayList<TypeBean> get_ListInfo(){
 		ArrayList<TypeBean> tag_Array = new ArrayList<TypeBean>();
+		//数据库连接
 		Connection conn = DbUtil.getConn();
+		//SQL
 		String sql = "select * from booktype";
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		try {
+			//预编译SQL，减少sql执行
 			stm = conn.prepareStatement(sql);
+			//执行查询
 			rs = stm.executeQuery();
+			//遍历
 			while(rs.next()){
 				TypeBean tag = new TypeBean();
 				tag.setTid(rs.getInt("tid"));

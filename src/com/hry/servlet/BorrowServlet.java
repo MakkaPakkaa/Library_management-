@@ -27,7 +27,7 @@ public class BorrowServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//
+		//设置编码类型
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset = UTF-8");
 		BookDao bookdao = new BookDao();
