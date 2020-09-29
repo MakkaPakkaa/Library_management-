@@ -74,6 +74,8 @@ public class BookDao {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		return tag_Array;
 	}
@@ -109,6 +111,9 @@ public class BookDao {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
+		}
 		return tag_Array;
 	}
 	/**
@@ -142,6 +147,9 @@ public class BookDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
+		}
 		return tag_Array;
 	}
 	/**
@@ -170,6 +178,9 @@ public class BookDao {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		return tag;
 	}
@@ -237,6 +248,9 @@ public class BookDao {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		return tag_Array;
 	}

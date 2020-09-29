@@ -58,40 +58,48 @@ public class DbUtil {
 		return conn;
 	}
 
-	/**
-	 * 关闭连接的方法
-	 */
-	public static void closeConn() {
-
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    
-	}
-//	public void CloseDB(ResultSet rs, PreparedStatement stm){
-//		if(rs!=null)
-//		{
-//			try {
-//				rs.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+//	/**
+//	 * 关闭连接的方法
+//	 */
+//	public static void closeConn() {
+//
+//		try {
+//			conn.close();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
-//		if(stm!=null)
-//		{
-//			try {
-//				stm.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		
+//    
 //	}
+	public static void CloseDB(ResultSet rs, PreparedStatement stm, Connection conn){
+		if(rs!=null)
+		{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(stm!=null)
+		{
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(conn!=null)
+		{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 }

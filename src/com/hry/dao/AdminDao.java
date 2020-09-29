@@ -10,6 +10,7 @@ import com.hry.bean.AdminBean;
 import com.hry.dbUtils.DbUtil;
 
 
+
 public class AdminDao {
 
 	/**
@@ -34,6 +35,9 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		return false;
 	}
@@ -67,8 +71,6 @@ public class AdminDao {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}finally {
-					DbUtil.closeConn();
 				}
 	}
 	/**
@@ -103,6 +105,8 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		
 		return adminbean;
@@ -139,6 +143,9 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
+		}
 		return tag_Array;
 	}
 	
@@ -170,6 +177,8 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DbUtil.CloseDB(rs, stm, conn);
 		}
 		return adminbean;
 	}
@@ -198,6 +207,7 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	/**
 	 * 删除用户的信息，根据传入的aid作为条件

@@ -44,6 +44,9 @@ public class TypeDao {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		finally {
+			DbUtil.CloseDB(rs, stm, conn);
+		}
 		return tag_Array;
 	}
 	/**
